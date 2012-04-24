@@ -1,0 +1,14 @@
+{% extends 'SimpleMQAdminGeneratorBundle::layout.html.twig' %}
+
+{% block content %}
+
+<div class="page-header"> 
+    <h1>Dashboard</h1> 
+</div>
+    
+<div class="well">
+    {% for entity in mappedEntitiesName %}      
+            <p><a href ="{{path( entity.route )}}">{{entity.name}}</a></p>
+    {% endfor %}
+</div>
+{% endblock content %}

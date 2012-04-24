@@ -1,0 +1,68 @@
+parameters:
+    simple_mq_admin_generator.adminpool.class: SimpleMQ\AdminGeneratorBundle\Admin\AdminPool
+    simple_mq_admin_generator.adminpool.entity.class: SimpleMQ\AdminGeneratorBundle\Admin\AdminEntity
+    simple_mq_admin_generator.route.resolver: SimpleMQ\AdminGeneratorBundle\Routing\Resolver
+    simple_mq_admin_generator.entity.mapper: SimpleMQ\AdminGeneratorBundle\Entity\Mapper
+    simple_mq_admin_generator.routing_loader: SimpleMQ\AdminGeneratorBundle\Routing\AdminLoader
+    simple_mq_admin_generator.crud_condroller: SimpleMQ\AdminGeneratorBundle\Controller\ServiceController
+
+services:
+
+    simple_mq_admin_generator.routing_loader:  
+        class: %simple_mq_admin_generator.routing_loader%
+        tags:
+          - { name: routing.loader}
+        arguments: ["@service_container"]       
+
+    simple_mq_admin_generator.route.resolver:
+        class: %simple_mq_admin_generator.route.resolver%
+        scope: request
+        arguments: 
+          - "@request"        
+          
+    simple_mq_admin_generator.entity.mapper:
+        class: %simple_mq_admin_generator.entity.mapper%
+        arguments: 
+          - "@doctrine.orm.entity_manager"    
+
+    simple_mq_admin_generator.builder.fields:
+        class: "SimpleMQ\AdminGeneratorBundle\Builder\Builder"  
+        scope: request             
+        arguments: 
+          - "@simple_mq_admin_generator.entity.mapper"  
+          - "@simple_mq_admin_generator.route.resolver"
+
+    simple_mq_admin_generator.builder.form:
+        class: "SimpleMQ\AdminGeneratorBundle\Builder\AdminFormBuilder"  
+        scope: request             
+        arguments: 
+          - "@simple_mq_admin_generator.entity.mapper"  
+          - "@simple_mq_admin_generator.route.resolver"          
+
+    simple_mq_admin_generator.adminpool:
+        class: %simple_mq_admin_generator.adminpool.class%
+        calls:
+            - [setCRUDActions, [%actions%]]  
+            - [setBaseRoute, [%base_route%]]  
+            - [setTitle, [%title%]]  
+        arguments: 
+          - "@service_container"
+          - "@simple_mq_admin_generator.entity.mapper"      
+        
+
+    simple_mq_admin_generator.crud_controller:  
+        class: "SimpleMQ\AdminGeneratorBundle\Controller\CRUDController"
+        scope: request
+        arguments:
+          - "@doctrine"
+          - "@service_container"
+          - "@form.factory"
+          - "@templating"
+          - "@request"
+          - "@router"
+          - "@simple_mq_admin_generator.adminpool"
+          - "@simple_mq_admin_generator.route.resolver"
+        
+    test.admin:  
+        class: SimpleMQ\AdminGeneratorBundle\Admin\Test
+        arguments: ["@doctrine.orm.entity_manager"]

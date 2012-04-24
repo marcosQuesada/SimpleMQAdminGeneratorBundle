@@ -1,0 +1,7 @@
+SimpleMQAdminGeneratorBundle:
+    resource: .
+    type: admin        
+    
+SimpleMQAdminGeneratorBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: "SimpleMQAdminGeneratorBundle:Default:index" }    

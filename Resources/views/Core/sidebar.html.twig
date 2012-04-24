@@ -1,0 +1,7 @@
+
+    <ul>
+         <li class="header">Mapped Entities</li>
+    {% for entity in mappedEntitiesName %}      
+            <li><a href ="{{path( entity.route )}}">{{entity.name}}</a></li>
+    {% endfor %}
+    </ul>

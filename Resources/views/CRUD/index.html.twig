@@ -1,0 +1,70 @@
+{% extends 'SimpleMQAdminGeneratorBundle::layout.html.twig' %}
+
+{% block content %}
+
+<div class="page-header"> 
+<h1>{{entityName}} List</h1>
+</div>
+
+<table class="zebra-striped" id="show_table">
+    <thead>
+        <tr>
+            {% for fields in entityFields %} 
+            <th>{{fields.fieldName }}</th>
+            {% endfor %}
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            {% for fields in entityFields %}               
+                {% if fields.fieldName == 'id' %}
+                    <td><a href="{{ path(entityRoutes.show, { 'id': entity.id }) }}">{{ attribute(entity,fields.fieldName )}}</a></td>
+                {%else%}
+                    {% if fields.type == 'datetime' %}
+                        <td>{{ attribute(entity,fields.fieldName )|date("m/d/Y")}}</td>
+                    {% else %}
+                        <td>{{ attribute(entity,fields.fieldName )}}</td>
+                    {% endif %}                          
+
+                {%endif%} 
+            {% endfor %}            
+            <td>
+                <a href="{{ path(entityRoutes.show, { 'id': entity.id }) }}" class="btn">show</a>
+                <a href="{{ path(entityRoutes.edit, { 'id': entity.id }) }}"  class="btn info">edit</a>                
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="well">
+        <a href="{{ path(entityRoutes.new) }}" class="btn large primary">
+            Create a new entry
+        </a>
+</div>
+
+<script type="text/javascript" src="{{ asset('/bundles/acmeadmin/js/jquery-latest.js')}}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/acmeadmin/js/jquery.tablesorter.min.js')}}"></script>
+	
+	<script type="text/javascript">
+	
+	$(function() {
+		$("table").tablesorter()				
+	});
+	
+	</script>	
+</script>
+{% endblock content %}
+
+{% block sidebar %}
+{{ parent() }}
+ <ul><li class="header"> 
+    <div class="alert-message info">
+      <p><strong>Information. </strong>Flash Message Space TODO!</p>
+    </div>
+    </li>
+</ul>    
+{% endblock sidebar %}
+

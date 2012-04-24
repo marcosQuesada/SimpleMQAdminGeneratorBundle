@@ -1,0 +1,42 @@
+{% extends 'SimpleMQAdminGeneratorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="page-header"> 
+        <h1>{{entityName}} id {{id}} Show</h1>
+    </div>
+
+    <table class="zebra-striped">
+        <tbody>
+            {% for fields in entityFields %} 
+                <tr>
+                    <th>{{fields.fieldName}}</th>
+                {% if fields.type == 'datetime' %}
+                    <td>{{ attribute(entity,fields.fieldName )|date("m/d/Y")}}</td>
+                {% else %}
+                    <td>{{ attribute(entity,fields.fieldName )}}</td>
+                {% endif %}                
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path(entityRoutes.list) }}" class="btn">
+        Back to the list
+    </a>
+    <a href="{{ path(entityRoutes.edit, { 'id': entity.id }) }}" class="btn success">
+        Edit
+    </a>
+    <form action="{{ path(entityRoutes.delete, { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit" class="btn danger">Delete</button>
+    </form>
+{%endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+    <div class="alert-message info">
+      <p><strong>Information. </strong>Flash Message Space TODO!</p>
+    </div>
+
+{% endblock sidebar %}

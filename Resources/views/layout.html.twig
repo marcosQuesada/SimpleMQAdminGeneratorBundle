@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>{% block title %}AdminBundle{% endblock %}</title>
+        <meta charset="UTF-8">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        {% stylesheets
+            '@SimpleMQAdminGeneratorBundle/Resources/public/css/*'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            <style type="text/css">
+                body {padding-top: 50px;}
+            </style>
+        {% endstylesheets %}
+    </head>
+    <body>
+        <!--Menu superior -->        
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <ul class="nav">
+                        <a class="brand" href="#">Admin Generator</a>
+                        <li class="active"><a href="{{ path('simple_mq_admin_dashboard') }}">Dashboard</a></li>
+                        <li class="dropdown" data-dropdown="dropdown">
+                            <a href="#" class="dropdown-toggle">Dropdown Menu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Option 1</a></li>
+                            <li><a href="#">Option 2</a></li>
+                            <li><a href="#">Option 3</a></li>
+                        </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="sidebar">
+                {% block sidebar %}
+                     {% render "SimpleMQAdminGeneratorBundle:Core:sidebar" %}                    
+                {% endblock sidebar %}
+            </div>
+        <div class="content">
+           {% if app.session.hasFlash('notice') %}
+            <div class="alert-message info" style="margin-bottom: 50px">
+                {{ app.session.flash('notice') }}
+            </div>
+            {% endif %}                     
+            {% block content %}    {% endblock %}
+            <footer>
+                <p>Footer content</p>
+            </footer>
+        </div>
+
+        {% javascripts
+            'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'
+            '@SimpleMQAdminGeneratorBundle/Resources/public/js/*'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}        
+    </body>
+</html>
