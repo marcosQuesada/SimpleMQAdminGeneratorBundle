@@ -62,7 +62,7 @@ Map your entities
 =================
 
 You can see a sandbox deploy here: 
-  https://github.com/marcosQuesada/SimpleMQ-Admin-Generator-Bundle--SANDBOX--under-development
+  https://github.com/marcosQuesada/SimpleMQ-Admin-Generator-Bundle--SANDBOX
 
  To map your entities create a service in that way :
 ```
