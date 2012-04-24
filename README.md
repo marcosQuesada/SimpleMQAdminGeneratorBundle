@@ -55,6 +55,14 @@ SimpleMQAdminGeneratorBundle:
 simple_mq_admin_generator:
     title:       Simple Admin Generator
     base_route:  admin   
+    actions:
+        list:    SimpleMQAdminBundle:CRUD:list.html.twig
+        show:    SimpleMQAdminBundle:CRUD:show.html.twig
+        edit:    SimpleMQAdminBundle:CRUD:edit.html.twig    
+        new:     SimpleMQAdminBundle:CRUD:new.html.twig      
+        create:  SimpleMQAdminBundle:CRUD:create.html.twig      
+        delete:  SimpleMQAdminBundle:CRUD:delete.html.twig      
+        update:  SimpleMQAdminBundle:CRUD:update.html.twig      
 ```
 
 After this step installation process has finished. 
