@@ -19,6 +19,7 @@ lots of benefits as injecting all depending services in class controller.
 Twitter Bootstrap has been included in all templates in order the get a nice look.
 
 This project has been developed as a way to improve my knowledge on Symfony 2 services , so it's just a toy project ;)
+Next Evolution will be rewrited from scratch using TDD & BDD and integration with TravisCI too.
 
 Installation Details
 ====================
