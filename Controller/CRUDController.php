@@ -23,15 +23,28 @@ class CRUDController
     protected $repository;
     protected $entityName;
  
-    public function __construct( $doctrine,
-                                $container,
-                                FormFactoryInterface $formFactory,
-                                EngineInterface $templating,
-                                Request $request,
-                                RouterInterface $router,
-                                $adminPool,
-                                $routeResolver)
-    {
+
+    /**
+     * Finds and displays a Test entity.
+     * 
+     * @param [type] $doctrine      [description]
+     * @param [type] $container     [description]
+     * @param [type] $formFactory   [description]
+     * @param [type] $templating    [description]
+     * @param [type] $request       [description]
+     * @param [type] $router        [description]
+     * @param [type] $adminPool     [description]
+     * @param [type] $routeResolver [description]
+     * 
+     * @return void
+     */    
+    public function __construct( $doctrine, $container,                            FormFactoryInterface $formFactory,
+        EngineInterface $templating,
+        Request $request,
+        RouterInterface $router,
+        $adminPool,
+        $routeResolver
+    ) {
         $this->doctrine    = $doctrine;
         $this->container = $container;
         $this->formFactory = $formFactory;
@@ -48,6 +61,11 @@ class CRUDController
     }    
 
 
+    /**
+     * [listAction description]
+     * 
+     * @return [type] [description]
+     */
     public function listAction()
     {
         $entities = $this->repository->findAll();
@@ -57,14 +75,17 @@ class CRUDController
                 'entityName' => $this->entityName,
                 'entities' => $entities,
                 'entityRoutes' => $this->adminEntity->getEntityRoutes(),                
-                'entityFields' => $this->adminEntity->getGridFields()
-        ));
+                'entityFields' => $this->adminEntity->getGridFields())
+        );
     }
 
 
     /**
      * Finds and displays a Test entity.
-     *
+     * 
+     * @param [type] $id [description]
+     * 
+     * @return [type]     [description]
      */
     public function showAction($id)
     {
@@ -76,19 +97,21 @@ class CRUDController
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->templating->renderResponse('SimpleMQAdminGeneratorBundle:CRUD:show.html.twig', array(
-            'entityName' => $this->entityName,
-            'entity' => $entity,
-            'entityRoutes' => $this->adminEntity->getEntityRoutes(),
-            'entityFields' => $this->adminEntity->getShowFields(),
-            'id' => $id,
-            'delete_form' => $deleteForm->createView(),
-        ));        
+        return $this->templating->renderResponse(
+            'SimpleMQAdminGeneratorBundle:CRUD:show.html.twig', array(
+                'entityName' => $this->entityName,
+                'entity' => $entity,
+                'entityRoutes' => $this->adminEntity->getEntityRoutes(),
+                'entityFields' => $this->adminEntity->getShowFields(),
+                'id' => $id,
+                'delete_form' => $deleteForm->createView())
+        );        
     }
 
     /**
-     * Displays a form to create a new Test entity.
-     *
+     * [newAction description]
+     * 
+     * @return [type] [description]
      */
     public function newAction()
     {
@@ -96,25 +119,27 @@ class CRUDController
         
         $form = $this->formFactory->create($formType, $this->entity);
 
-        return $this->templating->renderResponse('SimpleMQAdminGeneratorBundle:CRUD:new.html.twig', array(
+        return $this->templating->renderResponse(
+            'SimpleMQAdminGeneratorBundle:CRUD:new.html.twig', array(
             'entityName' => $this->entityName,
             'entity' => $this->entity,
             'entityRoutes' => $this->adminEntity->getEntityRoutes(),
-            'form'   => $form->createView()
-        ));
+            'form'   => $form->createView())
+        );
 
     }
 
     /**
-     * Creates a new Test entity.
-     *
+     * [createAction description]
+     * 
+     * @return [type] [description]
      */
     public function createAction()
     {
         $formType = $this->adminEntity->getForm();
         
         $form = $this->formFactory->create($formType, $this->entity);        
-        $form->bindRequest($this->request );
+        $form->bindRequest($this->request);
         
         if ($form->isValid()) {
             $em = $this->doctrine->getEntityManager();
@@ -124,29 +149,32 @@ class CRUDController
             $routes = $this->adminEntity->getEntityRoutes();
 
             $uri = $this->router->generate(
-                    $routes['show'], 
-                    array('id' => $this->entity->getId())
-                );
+                $routes['show'], 
+                array('id' => $this->entity->getId())
+            );
             return new RedirectResponse($uri);    
             
         }        
         
-        return $this->templating->renderResponse('SimpleMQAdminGeneratorBundle:CRUD:new.html.twig', array(
-            'entityName' => $this->entityName,
-            'entity' => $this->entity,
-            'entityRoutes' => $this->adminEntity->getEntityRoutes(),
-            'form'   => $form->createView()
-        ));        
+        return $this->templating->renderResponse(
+            'SimpleMQAdminGeneratorBundle:CRUD:new.html.twig', array(
+                'entityName' => $this->entityName,
+                'entity' => $this->entity,
+                'entityRoutes' => $this->adminEntity->getEntityRoutes(),
+                'form'   => $form->createView())
+        );        
     
     }
 
     /**
-     * Displays a form to edit an existing Test entity.
-     *
+     * [editAction description]
+     * 
+     * @param [type] $id [description]
+     * 
+     * @return [type]     [description]
      */
     public function editAction($id)
     {
-
         $entity = $this->repository->find($id);
  
         if (!$entity) {
@@ -157,19 +185,23 @@ class CRUDController
         $form = $this->formFactory->create($formType, $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->templating->renderResponse('SimpleMQAdminGeneratorBundle:CRUD:edit.html.twig', array(
-            'entityName' => $this->entityName,
-            'entity' => $this->entity,
-            'entityRoutes' => $this->adminEntity->getEntityRoutes(),
-            'form'   => $form->createView(),
-            'delete_form' => $deleteForm->createView(), 
-            'id' => $id
-        ));        
+        return $this->templating->renderResponse(
+            'SimpleMQAdminGeneratorBundle:CRUD:edit.html.twig', array(
+                'entityName' => $this->entityName,
+                'entity' => $this->entity,
+                'entityRoutes' => $this->adminEntity->getEntityRoutes(),
+                'form'   => $form->createView(),
+                'delete_form' => $deleteForm->createView(), 
+                'id' => $id)
+        );        
     }
 
     /**
-     * Edits an existing Test entity.
-     *
+     * [updateAction description]
+     * 
+     * @param [type] $id [description]
+     * 
+     * @return [type]     [description]
      */
     public function updateAction($id)
     {
@@ -181,7 +213,7 @@ class CRUDController
         $formType = $this->adminEntity->getForm();
         
         $form = $this->formFactory->create($formType, $entity);
-        $form->bindRequest($this->request );
+        $form->bindRequest($this->request);
         $deleteForm = $this->createDeleteForm($id);        
       
         $form->bindRequest($this->request);
@@ -206,14 +238,16 @@ class CRUDController
     }
 
     /**
-     * Deletes a Test entity.
-     *
+     * [deleteAction description]
+     * 
+     * @param [type] $id [description]
+     * 
+     * @return [type]     [description]
      */
     public function deleteAction($id)
-    {   
-       
+    {          
         $form = $this->createDeleteForm($id);
-        $form->bindRequest($this->request );
+        $form->bindRequest($this->request);
 
         if ($form->isValid()) {
             
@@ -230,14 +264,19 @@ class CRUDController
         $routes = $this->adminEntity->getEntityRoutes();
         
         return new RedirectResponse($this->router->generate($routes['list']));
-
     }
 
-    private function createDeleteForm($id)
+    /**
+     * [createDeleteForm description]
+     * 
+     * @param [type] $id [description]
+     * 
+     * @return [type]     [description]
+     */
+    protected function createDeleteForm($id)
     {
         return  $this->formFactory->createBuilder('form')
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
     }    
 }

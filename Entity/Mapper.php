@@ -18,6 +18,11 @@ Class Mapper
     protected $entityFields;   //#TODO: Unificar Repository&Fields!!!
     protected $entityFieldNames;    
 
+    /**
+     * [__construct description]
+     * 
+     * @param [type] $entityManager [description]
+     */
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
@@ -26,6 +31,13 @@ Class Mapper
         
     }
     
+    /**
+     * [setEntityClass description]
+     * 
+     * @param [type] $entityClass [description]
+     * 
+     * @return void
+     */
     public function setEntityClass($entityClass)
     {
         $this->entityClass = $entityClass;
@@ -33,63 +45,90 @@ Class Mapper
         $this->entityFields = $this->getEntityFields(); /// TODO: ! REFACTOR 
         $this->entityReflectionClass = $this->entity->getReflectionProperties();        
     }
-    
+
     /**
      * Reordenar array key por array Asociativo
-     * @return type 
+     * 
+     * @return [type] [description]
      */
-    public function processEntityFields(){
+    public function processEntityFields()
+    {
         $fields = array();
         
-        foreach($this->entityFields AS $field){
+        foreach ($this->entityFields AS $field) {
             $fields[$field['fieldName']] = $field;
         }
         return $fields;
     }
     
-    public function createEntityFieldMapper(){
+    /**
+     * [createEntityFieldMapper description]
+     * 
+     * @return [type] [description]
+     */
+    public function createEntityFieldMapper()
+    {
         $fieldNames = $this->processEntityFields();
-        foreach($this->entityReflectionClass AS $key=>$field){
+        foreach ($this->entityReflectionClass AS $key=>$field) {
 
-            if(isset($fieldNames[$key])){
+            if (isset($fieldNames[$key])) {
                 $fieldNames[$key]['reflectionClass'] = $field;
-            }else{
+            } else {
                 $fieldNames[$key] = '';
             }   
         }        
         return $fieldNames;
     }
     
-    
-
-    public function getMappedEntityFields(){
+    /**
+     * [getMappedEntityFields description]
+     * 
+     * @return [type] [description]
+     */
+    public function getMappedEntityFields()
+    {
         $fieldNames = $this->processEntityFields();
         
         $fields = array();
-        foreach($this->entityReflectionClass AS $key=>$field){
+        foreach ($this->entityReflectionClass AS $key=>$field) {
             $fields[]= $field->getName();
         }        
         return $fields;
     }
 
-    public function getEntityFields(){
+    /**
+     * [getEntityFields description]
+     * 
+     * @return [type] [description]
+     */
+    public function getEntityFields()
+    {
         $fields = array();
         $fieldNames = $this->entity->getFieldNames();
-        foreach ($fieldNames AS $field){    
+        foreach ($fieldNames AS $field) {    
             $fields[] = $this->entity->getFieldMapping($field);
         }        
         
         return $fields;
     }
+
     /**
-     *
-     * @param string $class
-     * @return ClassMetadata from Class
+     * [getEntityMapperFromClass description]
+     * 
+     * @param [type] $class [description]
+     * 
+     * @return [type]        [description]
      */
-    public function getEntityMapperFromClass($class){
+    public function getEntityMapperFromClass($class)
+    {
         return $this->metadataFactory->getMetadataFor($class);
     }    
     
+    /**
+     * [getEntity description]
+     * 
+     * @return [type] [description]
+     */
     public function getEntity()
     {
         return $this->entity;
