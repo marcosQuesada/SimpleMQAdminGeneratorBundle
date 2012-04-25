@@ -50,6 +50,7 @@ Class Mapper
     public function createEntityFieldMapper(){
         $fieldNames = $this->processEntityFields();
         foreach($this->entityReflectionClass AS $key=>$field){
+
             if(isset($fieldNames[$key])){
                 $fieldNames[$key]['reflectionClass'] = $field;
             }else{
@@ -59,6 +60,18 @@ Class Mapper
         return $fieldNames;
     }
     
+    
+
+    public function getMappedEntityFields(){
+        $fieldNames = $this->processEntityFields();
+        
+        $fields = array();
+        foreach($this->entityReflectionClass AS $key=>$field){
+            $fields[]= $field->getName();
+        }        
+        return $fields;
+    }
+
     public function getEntityFields(){
         $fields = array();
         $fieldNames = $this->entity->getFieldNames();

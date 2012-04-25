@@ -23,6 +23,7 @@ class Builder
   	public function getEntityFields()
   	{
   		return $this->entityMapping->getEntityFields();
+      //return $this->entityMapping->getMappedEntityFields();
 
   	}
 }

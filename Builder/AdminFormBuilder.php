@@ -12,9 +12,16 @@ class AdminFormBuilder extends AbstractType
     public function __construct($entityMapping ,$routeResolver)
     {
     	$this->entityMapping = $entityMapping;
+
     	$this->entityClass = $routeResolver->getReferenceClass();
     	$this->entityMapping->setEntityClass($this->entityClass);
-    	$this->fields = $this->entityMapping->getEntityFields();
+    	//$this->fields = $this->entityMapping->getEntityFields();
+
+      $this->fields = $this->entityMapping->getMappedEntityFields();
+     // echo "entityFIelds";
+     // ladybug_dump($this->entityMapping->getEntityFields());
+     // echo "Fields";
+     // ladybug_dump($this->fields);
   	}
 
    /**
@@ -24,8 +31,8 @@ class AdminFormBuilder extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         foreach ($this->fields AS $field){
-        	if($field['fieldName'] != 'id')
-            	$builder->add($field['fieldName']); 
+          if($field!= 'id')
+              $builder->add($field); 
         }     
     }
 
