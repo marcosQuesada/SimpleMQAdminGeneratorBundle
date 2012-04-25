@@ -66,6 +66,10 @@ simple_mq_admin_generator:
         update:  SimpleMQAdminBundle:CRUD:update.html.twig      
 ```
 
+Your last step is generating your Assets:
+```
+app/console assets:install --symlink web/
+```
 After this step installation process has finished. 
 
 Map your entities
