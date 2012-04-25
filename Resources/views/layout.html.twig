@@ -39,24 +39,24 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div id="main-content" class="container-fluid">
             <div class="sidebar">
                 {% block sidebar %}
                      {% render "SimpleMQAdminGeneratorBundle:Core:sidebar" %}                    
                 {% endblock sidebar %}
             </div>
-        <div class="content">
-           {% if app.session.hasFlash('notice') %}
-            <div class="alert-message info" style="margin-bottom: 50px">
-                {{ app.session.flash('notice') }}
+            <div class="content">
+               {% if app.session.hasFlash('notice') %}
+                <div class="alert-message info" style="margin-bottom: 50px">
+                    {{ app.session.flash('notice') }}
+                </div>
+                {% endif %}                     
+                {% block content %}    {% endblock %}
+                <footer>
+                    <p>Footer content</p>
+                </footer>
             </div>
-            {% endif %}                     
-            {% block content %}    {% endblock %}
-            <footer>
-                <p>Footer content</p>
-            </footer>
         </div>
-
         {% javascripts
             'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'
             '@SimpleMQAdminGeneratorBundle/Resources/public/js/*'
