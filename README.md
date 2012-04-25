@@ -14,7 +14,9 @@ overriding number of form , grid, list fields, by extending Admin Class in your 
 Redefining them is as easy as Symfony 2 does, so you are able to define standard forms to be used in your Admin Area. 
 
 Actually CRUDController is implemented as a service , being decoupled from Original Controller Class has 
-lots of benefits as injecting all depending services in class controller.
+lots of benefits as injecting all depending services in class controller. Admin Dashboard is located on path 
+
+    /admin/dashboard
 
 Twitter Bootstrap has been included in all templates in order the get a nice look.
 
