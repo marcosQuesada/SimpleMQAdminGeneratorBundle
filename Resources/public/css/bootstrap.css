@@ -226,7 +226,7 @@ body {
 }
 .container-fluid > .content {
   margin-left: 240px;
-  margin-right: 8px;
+  margin-right: 0px;
 }
 a {
   color: #0069d6;
@@ -2140,7 +2140,7 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
 .well {
   background-color: #f5f5f5;
   margin-bottom: 20px;
-  padding: 19px;
+  padding: 19px 0px 0px 0px;
   min-height: 20px;
   border: 1px solid #eee;
   border: 1px solid rgba(0, 0, 0, 0.05);

@@ -5,32 +5,44 @@
     <div class="page-header"> 
         <h1>{{entityName}} id {{id}} Show</h1>
     </div>
-
-    <table class="zebra-striped">
-        <tbody>
-            {% for fields in entityFields %} 
-                <tr>
-                    <th>{{fields.fieldName}}</th>
-                {% if fields.type == 'datetime' %}
-                    <td>{{ attribute(entity,fields.fieldName )|date("m/d/Y")}}</td>
-                {% else %}
-                    <td>{{ attribute(entity,fields.fieldName )}}</td>
-                {% endif %}                
-                </tr>
+    <div style="well">
+        <table class="zebra-striped">
+            <tbody>
+                {% for fields in entityFields %} 
+                    <tr>
+                        <th>{{fields.fieldName}}</th>
+                    {% if fields.type == 'datetime' %}
+                        <td>{{ attribute(entity,fields.fieldName )|date("m/d/Y")}}</td>
+                    {% else %}
+                        <td>{{ attribute(entity,fields.fieldName )}}</td>
+                    {% endif %}                
+                    </tr>
                 {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path(entityRoutes.list) }}" class="btn">
-        Back to the list
-    </a>
+            </tbody>
+        </table>
+    </div>
+    <form id="delete-form" action="{{ path(entityRoutes.delete, { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <!--<button type="submit" class="btn danger">Delete</button>-->
+    </form>
+<div style="padding:10px 10px 10px 20px">
     <a href="{{ path(entityRoutes.edit, { 'id': entity.id }) }}" class="btn success">
         Edit
     </a>
-    <form action="{{ path(entityRoutes.delete, { 'id': entity.id }) }}" method="post">
-        {{ form_widget(delete_form) }}
-        <button type="submit" class="btn danger">Delete</button>
-    </form>
+    <a id="delete" href="#" class="btn danger">
+        Delete
+    </a>
+    <a id="back" href="{{ path(entityRoutes.list)}}" class="btn info">
+        Back
+    </a>
+</div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $('#delete').click(function() {
+        $('#delete-form').submit();
+    });  
+</script>    
 {%endblock %}
 
 {% block sidebar %}

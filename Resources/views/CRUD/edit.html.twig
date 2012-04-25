@@ -6,26 +6,41 @@
 <h1>{{entityName}} Edit</h1>
 </div>
 
-<form class="form-stacked" action="{{ path(entityRoutes.update, { 'id': id })}}" method="post" {{ form_enctype(form) }}>
+<form id="edit-form" class="form-stacked well" action="{{ path(entityRoutes.update, { 'id': id })}}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
-    <button type="submit" class="btn success">Edit</button>
+    <br>
+    <!-- <button type="submit" class="btn success">Edit</button>-->
 </form>
 
 
-<a href="{{ path(entityRoutes.list)}}" class="btn">
-    Back to the list
-</a>
-
-<form action="{{ path(entityRoutes.delete, { 'id': id }) }}" method="post">
+<form id="delete-form" action="{{ path(entityRoutes.delete, { 'id': id }) }}" method="post">
     {{ form_widget(delete_form)}}
-    <button type="submit" class="btn danger">Delete</button>
+    <!--<button type="submit" class="btn danger">Delete</button>-->
 </form>
 
+<div style="padding:5px 10px 10px 20px">
+    <a id="edit" href="#" class="btn success">
+        Edit
+    </a>
+    <a id="delete" href="#" class="btn danger">
+        Delete
+    </a>
+    <a id="back" href="{{ path(entityRoutes.list)}}" class="btn info">
+        Back
+    </a>
+</div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $('#delete').click(function() {
+        $('#delete-form').submit();
+    });
+    $('#edit').click(function() {
+        $('#edit-form').submit();
+    });    
+</script>
+  
 {% endblock %}
 {% block sidebar %}
-{{ parent() }}
-    <div class="alert-message info">
-      <p><strong>Information. </strong>Flash Message Space TODO!</p>
-    </div>
-
+    {{ parent() }}
 {% endblock sidebar %}

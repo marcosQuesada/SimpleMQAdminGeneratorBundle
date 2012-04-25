@@ -6,22 +6,30 @@
 <h1>{{entityName}} New</h1>
 </div>
 
-<form class="form-stacked" action="{{ path(entityRoutes.create)}}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit" class="btn success">Create</button>
-    </p>
-</form>
+<div id="block">
+    <form id="create-form" class="form-stacked well" action="{{ path(entityRoutes.create)}}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <br>
+        <!-- <button type="submit" class="btn success">Create</button>-->
+    </form>
+</div>
+<div style="padding:10px 10px 10px 20px">
+    <a id="create" href="#" class="btn success">
+        Create
+    </a>
+    <a id="back" href="{{ path(entityRoutes.list)}}" class="btn info">
+        Back
+    </a>
+</div>
 
-<a href="{{ path(entityRoutes.list)}}" class="btn">
-    Back to the list
-</a>
-
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $('#create').click(function() {
+        $('#create-form').submit();
+    });    
+</script>
 {%endblock %}
-{% block sidebar %}
-{{ parent() }}
-    <div class="alert-message info">
-      <p><strong>Information. </strong>Flash Message Space TODO!</p>
-    </div>
 
+{% block sidebar %}
+    {{ parent() }}
 {% endblock sidebar %}
