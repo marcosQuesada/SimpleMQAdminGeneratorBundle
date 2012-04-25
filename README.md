@@ -56,7 +56,6 @@ SimpleMQAdminGeneratorBundle:
 ```
 simple_mq_admin_generator:
     title:       Simple Admin Generator
-    base_route:  admin   
     actions:
         list:    SimpleMQAdminBundle:CRUD:list.html.twig
         show:    SimpleMQAdminBundle:CRUD:show.html.twig
