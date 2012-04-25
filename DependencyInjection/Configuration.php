@@ -23,10 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('title')->end()
-            ->end()
-            ->children()
-                ->scalarNode('base_route')->end()
-            ->end()                         
+            ->end()                    
             ->children()
                 ->arrayNode('actions')
                     ->useAttributeAsKey('id')

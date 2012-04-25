@@ -23,7 +23,7 @@ class SimpleMQAdminGeneratorExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('title', $config['title']);
-        $container->setParameter('base_route', $config['base_route']);        
+        //$container->setParameter('base_route', $config['base_route']);        
         $container->setParameter('actions', $config['actions']);
         //$container->setParameter('templates', $config['templates']);
         

@@ -43,7 +43,6 @@ services:
         class: %simple_mq_admin_generator.adminpool.class%
         calls:
             - [setCRUDActions, [%actions%]]  
-            - [setBaseRoute, [%base_route%]]  
             - [setTitle, [%title%]]  
         arguments: 
           - "@service_container"
